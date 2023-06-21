@@ -66,6 +66,7 @@ Contract Staking(
         totalAmountStaked = totalAmountStaked + amount
     }
 
+    // Do we need to check the caller?
     @using(updateFields = true, checkExternalCaller = false)
     pub fn unstake(staker: Address, amount: U256) -> () {
         whenNotPaused()
@@ -79,6 +80,7 @@ Contract Staking(
         totalAmountStaked = totalAmountStaked - amount
     }
 
+    // Do we need to check the caller?
     @using(assetsInContract = true, checkExternalCaller = false)
     pub fn claimRewards(staker: Address) -> () {
         whenNotPaused()

@@ -54,8 +54,10 @@ Contract AyinPresale (
     @using(assetsInContract = true, preapprovedAssets = true, updateFields = true, checkExternalCaller = false)
     pub fn buy(amount: U256) -> () {
         assert!(saleOpen, ErrorCodes.SaleNotOpen)
+        // Nit: getTokensLeft() >= amount
         assert!(getTokensLeft() - amount >= 0, ErrorCodes.NotEnoughTokens)
 
+        // How about setPerToken? set is the smallest unit of ALPH, just like wei in ETH, then we can remove the `/ 1e18`
         let totalPrice = amount * alphPerToken / 1e18
         transferTokenToSelf!(callerAddress!(), ALPH, totalPrice)
 

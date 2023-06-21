@@ -1,6 +1,7 @@
 import "std/fungible_token_interface"
 
 Contract LiquidStaking(
+    // Nit: ayin: AyinToken, we can use `tokenId!(ayin)` to get the token id of ayin, and use `contractId!(ayin)` to get the contract id of ayin, both `tokenId!` and contractId!` will not bring additional gas costs, and it can make the code clear.
     tokenId: ByteVec,
     symbol: ByteVec,
     name: ByteVec,
@@ -19,6 +20,7 @@ Contract LiquidStaking(
     event PriceChanged(newPrice: U256)
 
     fn getInflationPerMillisecond() -> U256 {
+        // Nit: return inflationRate * 1e18 / totalSupply, we can save the gas consumption of store and load, currently the compiler does not have such optimization
         let inflation = inflationRate * 1e18 / totalSupply
 
         return inflation
@@ -26,6 +28,7 @@ Contract LiquidStaking(
 
     // Reward paid per 1 xToken
     pub fn getCurrentRewardPerMillisecond() -> U256 {
+        // Nit: return gainPerMillisecond * rewardPool / totalSupply
         let rewardPerMillisecond = gainPerMillisecond * rewardPool / totalSupply
 
         return rewardPerMillisecond
@@ -39,6 +42,7 @@ Contract LiquidStaking(
         let rewardPerMillisecond = getCurrentRewardPerMillisecond()
         let elapsed = blockTimeStamp!() - updatedAt
         let projectedReward = rewardPerMillisecond * elapsed
+        // Nit: return if (projectedReward > rewardPool) rewardPool else projectedReward
         let reward = if (projectedReward > rewardPool) rewardPool else projectedReward
 
         return reward
@@ -53,6 +57,7 @@ Contract LiquidStaking(
         let elapsed = blockTimeStamp!() - updatedAt
         let projectedInflation = inflationPerMillisecond * elapsed
 
+        // Nit: return if (projectedInflation > inflationPool) inflationPool else projectedInflation
         let inflation = if (projectedInflation > inflationPool) inflationPool else projectedInflation
 
         return inflation
@@ -66,6 +71,7 @@ Contract LiquidStaking(
         let reward = getCurrentReward()
         let inflation = getCurrentInflation()
 
+        // Nit: return currentXTokenPrice + reward + inflation
         let currentPrice = currentXTokenPrice + reward + inflation
         return currentPrice
     }
