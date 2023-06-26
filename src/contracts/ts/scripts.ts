@@ -15,12 +15,14 @@ import { default as MintAyinScriptJson } from "../ayin/scripts/ayin/MintAyin.ral
 import { default as BurnXTokenScriptJson } from "../ayin/scripts/liquid_staking/BurnXToken.ral.json";
 import { default as MintXTokenScriptJson } from "../ayin/scripts/liquid_staking/MintXToken.ral.json";
 import { default as TopUpRewardsScriptJson } from "../ayin/scripts/liquid_staking/TopUpRewards.ral.json";
+import { default as UpgradeLiquidStakingScriptJson } from "../ayin/scripts/liquid_staking/UpgradeLiquidStaking.ral.json";
 import { default as BuyAyinScriptJson } from "../ayin/scripts/presale/BuyAyin.ral.json";
 import { default as DepositAyinScriptJson } from "../ayin/scripts/presale/DepositAyin.ral.json";
+import { default as UpgradePresaleScriptJson } from "../ayin/scripts/presale/UpgradePresale.ral.json";
 import { default as ClaimRewardsScriptJson } from "../ayin/scripts/staking/ClaimRewards.ral.json";
 import { default as StakeScriptJson } from "../ayin/scripts/staking/Stake.ral.json";
 import { default as UnstakeScriptJson } from "../ayin/scripts/staking/Unstake.ral.json";
-import { default as UpgradeStakingScriptJson } from "../ayin/scripts/UpgradeStaking.ral.json";
+import { default as UpgradeStakingScriptJson } from "../ayin/scripts/staking/UpgradeStaking.ral.json";
 import { default as AddLiquidityScriptJson } from "../scripts/AddLiquidity.ral.json";
 import { default as CreatePairScriptJson } from "../scripts/CreatePair.ral.json";
 import { default as EnableFeeCollectorScriptJson } from "../scripts/EnableFeeCollector.ral.json";
@@ -47,6 +49,10 @@ export const TopUpRewards = new ExecutableScript<{
   liquidStaking: HexString;
   amount: bigint;
 }>(Script.fromJson(TopUpRewardsScriptJson));
+export const UpgradeLiquidStaking = new ExecutableScript<{
+  staking: HexString;
+  newBytecode: HexString;
+}>(Script.fromJson(UpgradeLiquidStakingScriptJson));
 export const BuyAyin = new ExecutableScript<{
   presale: HexString;
   amount: bigint;
@@ -55,6 +61,10 @@ export const DepositAyin = new ExecutableScript<{
   presale: HexString;
   amount: bigint;
 }>(Script.fromJson(DepositAyinScriptJson));
+export const UpgradePresale = new ExecutableScript<{
+  presale: HexString;
+  newBytecode: HexString;
+}>(Script.fromJson(UpgradePresaleScriptJson));
 export const ClaimRewards = new ExecutableScript<{ staking: HexString }>(
   Script.fromJson(ClaimRewardsScriptJson)
 );
@@ -67,7 +77,7 @@ export const Unstake = new ExecutableScript<{
   amount: bigint;
 }>(Script.fromJson(UnstakeScriptJson));
 export const UpgradeStaking = new ExecutableScript<{
-  upgradeable: HexString;
+  staking: HexString;
   newBytecode: HexString;
 }>(Script.fromJson(UpgradeStakingScriptJson));
 export const AddLiquidity = new ExecutableScript<{

@@ -1,15 +1,15 @@
 {
   "version": "v2.3.3",
-  "name": "DepositAyin",
-  "bytecodeTemplate": "0101030000000cb40c0d{0}0102{1}a3{1}0d0c{0}0107",
+  "name": "UpgradeLiquidStaking",
+  "bytecodeTemplate": "01010300000005{1}0d0c{0}0115",
   "fieldsSig": {
     "names": [
-      "presale",
-      "amount"
+      "staking",
+      "newBytecode"
     ],
     "types": [
       "ByteVec",
-      "U256"
+      "ByteVec"
     ],
     "isMutable": [
       false,

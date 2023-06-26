@@ -275,6 +275,14 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResult<HexString>> => {
       return testMethod(this, "getTokenId", params);
     },
+    upgrade: async (
+      params: TestContractParams<
+        LiquidStakingTypes.Fields,
+        { newBytecode: HexString }
+      >
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "upgrade", params);
+    },
   };
 }
 
@@ -283,7 +291,7 @@ export const LiquidStaking = new Factory(
   Contract.fromJson(
     LiquidStakingContractJson,
     "",
-    "008d5e3b5535b82c25f6762590c04870e7b4f1af5b97495d69db62a3d6d96a7b"
+    "ed59d5298440797621cd7f317a3555b5548013263bee67dcf63e7802fbb401cc"
   )
 );
 

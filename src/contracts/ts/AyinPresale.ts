@@ -91,14 +91,6 @@ class Factory extends ContractFactory<
   }
 
   tests = {
-    upgrade: async (
-      params: TestContractParams<
-        AyinPresaleTypes.Fields,
-        { newBytecode: HexString }
-      >
-    ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "upgrade", params);
-    },
     onlyOwner: async (
       params: TestContractParams<AyinPresaleTypes.Fields, { caller: Address }>
     ): Promise<TestContractResult<null>> => {
@@ -201,6 +193,14 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResult<null>> => {
       return testMethod(this, "destroy", params);
     },
+    upgrade: async (
+      params: TestContractParams<
+        AyinPresaleTypes.Fields,
+        { newBytecode: HexString }
+      >
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "upgrade", params);
+    },
   };
 }
 
@@ -209,7 +209,7 @@ export const AyinPresale = new Factory(
   Contract.fromJson(
     AyinPresaleContractJson,
     "",
-    "ff398bbc04c5bd2f8b967a9f24666fc22ea21da1b54a82ecb735b928eb954c4e"
+    "f9fbeac75d61b75672a18eb96897c34e836eadbfbb831bbe2b794532f270d22e"
   )
 );
 

@@ -6,7 +6,7 @@ Contract AyinPresale (
     mut tokensSold: U256,
     mut alphBalance: U256,
     mut owner_: Address
-) extends Permissions(owner_) implements IUpgradeable {
+) extends Permissions(owner_) {
     enum ErrorCodes {
         SaleNotOpen = 0
         NotEnoughTokens = 1

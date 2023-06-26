@@ -1,3 +1,0 @@
-TxScript UpgradeStaking(upgradeable: IUpgradeable, newBytecode: ByteVec) {
-    upgradeable.upgrade(newBytecode)
-}

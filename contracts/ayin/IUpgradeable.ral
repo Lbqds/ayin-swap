@@ -1,3 +1,0 @@
-Interface IUpgradeable {
-    pub fn upgrade(newBytecode: ByteVec) -> ()
-}

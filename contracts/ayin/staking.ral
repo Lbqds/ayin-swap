@@ -8,7 +8,7 @@ Contract Staking(
     mut lastUpdateTime: U256,
     mut owner_: Address,
     mut paused_: Bool
-) extends Constants(), StakingAccountFactory(tokenId, rewardsTokenId, stakingAccountTemplateId), Pauseable(owner_, paused_) implements IUpgradeable {
+) extends Constants(), StakingAccountFactory(tokenId, rewardsTokenId, stakingAccountTemplateId), Pauseable(owner_, paused_) {
     pub fn getTokenId() -> ByteVec {
         return tokenId
     }
