@@ -5,7 +5,7 @@ Contract LiquidStaking(
     symbol: ByteVec,
     name: ByteVec,
     mut inflationPool: U256,
-    mut inflationRate: U256,
+    mut inflationRate: U256, // Amount of tokens that will be used from inflation pool
     mut gainPerMillisecond: U256, // Percentage of rewardPool to be paid as a reward each millisecond where 1e18 is 100% of the pool
     mut updatedAt: U256,
     mut currentXTokenPrice: U256,
@@ -18,40 +18,25 @@ Contract LiquidStaking(
     event Burn(sender: Address, amount: U256, newSupply: U256)
     event PriceChanged(newPrice: U256)
 
-    fn getInflationPerMillisecond() -> U256 {
-        let inflation = inflationRate * 1e18 / totalSupply
-
-        return inflation
-    }
-
-    // Reward paid per 1 xToken
-    pub fn getCurrentRewardPerMillisecond() -> U256 {
-        let rewardPerMillisecond = gainPerMillisecond * rewardPool / totalSupply
-
-        return rewardPerMillisecond
-    }
-
     fn getCurrentReward() -> U256 {
         if (totalSupply == 0) {
             return 0
         }
 
-        let rewardPerMillisecond = getCurrentRewardPerMillisecond()
         let elapsed = blockTimeStamp!() - updatedAt
-        let projectedReward = rewardPerMillisecond * elapsed
+        let projectedReward = gainPerMillisecond * rewardPool * elapsed / totalSupply
         let reward = if (projectedReward > rewardPool) rewardPool else projectedReward
 
         return reward
     }
 
     fn getCurrentInflation() -> U256 {
-        if (totalSupply == 0) {
+        if (totalSupply == 0 || inflationPool == 0) {
             return 0
         }
 
-        let inflationPerMillisecond = getInflationPerMillisecond()
         let elapsed = blockTimeStamp!() - updatedAt
-        let projectedInflation = inflationPerMillisecond * elapsed
+        let projectedInflation = inflationRate * 1e18 * elapsed / totalSupply
 
         let inflation = if (projectedInflation > inflationPool) inflationPool else projectedInflation
 

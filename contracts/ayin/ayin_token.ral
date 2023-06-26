@@ -29,11 +29,11 @@ Contract AyinToken(
     }
 
     pub fn getSymbol() -> ByteVec {
-        return #4159494e
+        return #4159494e //"AYIN"
     }
 
     pub fn getName() -> ByteVec {
-        return #4159494e
+        return #4159494e //"AYIN"
     }
 
     pub fn getDecimals() -> U256 {
