@@ -17,7 +17,7 @@ Abstract Contract Pauseable(mut owner_: Address, mut paused_: Bool) extends Perm
         paused_ = false
     }
 
-    pub fn whenNotPaused() -> () {
+    fn whenNotPaused() -> () {
         assert!(paused_ == false, PauseableErrorCodes.Paused)
     }
 }
