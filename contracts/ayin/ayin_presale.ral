@@ -4,7 +4,6 @@ Contract AyinPresale (
     mut alphPerToken: U256,
     mut saleOpen: Bool,
     mut tokensSold: U256,
-    mut alphBalance: U256,
     mut owner_: Address
 ) extends Permissions(owner_) {
     enum ErrorCodes {
@@ -14,10 +13,6 @@ Contract AyinPresale (
 
     pub fn getAyinTokenId() -> ByteVec {
         return ayinToken
-    }
-
-    pub fn getAlphBalance() -> U256 {
-        return alphBalance
     }
 
     pub fn getTokensLeft() -> U256 {
@@ -59,7 +54,6 @@ Contract AyinPresale (
         let totalPrice = amount * alphPerToken / 1e18
         transferTokenToSelf!(callerAddress!(), ALPH, totalPrice)
 
-        alphBalance = alphBalance + totalPrice
         tokensSold = tokensSold + amount
 
         if (tokensSold == tokensForSale) {
@@ -79,8 +73,6 @@ Contract AyinPresale (
     @using(updateFields = true)
     pub fn withdrawAlph(amount: U256, sendTo: Address) -> () {
         withdrawToken_(callerAddress!(), ALPH, amount, sendTo)
-
-        alphBalance = alphBalance - amount
     }
 
     @using(updateFields = true)
