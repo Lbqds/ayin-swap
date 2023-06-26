@@ -18,7 +18,7 @@ Contract LiquidStaking(
     event Burn(sender: Address, amount: U256, newSupply: U256)
     event PriceChanged(newPrice: U256)
 
-    fn getCurrentReward() -> U256 {
+    fn getCurrentRewardPerXToken() -> U256 {
         if (totalSupply == 0) {
             return 0
         }
@@ -30,7 +30,7 @@ Contract LiquidStaking(
         return reward
     }
 
-    fn getCurrentInflation() -> U256 {
+    fn getCurrentInflationPerXToken() -> U256 {
         if (totalSupply == 0 || inflationPool == 0) {
             return 0
         }
@@ -48,8 +48,8 @@ Contract LiquidStaking(
             return currentXTokenPrice
         }
 
-        let reward = getCurrentReward()
-        let inflation = getCurrentInflation()
+        let reward = getCurrentRewardPerXToken()
+        let inflation = getCurrentInflationPerXToken()
 
         let currentPrice = currentXTokenPrice + reward + inflation
         return currentPrice
@@ -58,8 +58,8 @@ Contract LiquidStaking(
     @using(updateFields = true)
     fn updatePrice() -> () {
         let newPrice = getCurrentPrice()
-        let reward = getCurrentReward()
-        let inflation = getCurrentInflation()
+        let reward = getCurrentRewardPerXToken()
+        let inflation = getCurrentInflationPerXToken()
 
         if (rewardPool <= reward) {
             rewardPool = 0
