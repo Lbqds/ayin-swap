@@ -4,8 +4,8 @@ TxScript Stake(staking: Staking, amount: U256) {
     let stakingAccExists = staking.stakingAccountExists(staker)
 
     if (stakingAccExists) {
-        staking.stake{staker -> tokenId: amount}(staker, amount)
+        staking.stake{staker -> tokenId: amount}(amount)
     } else {
-        staking.stake{staker -> tokenId: amount, ALPH: 1 alph}(staker, amount)
+        staking.stake{staker -> tokenId: amount, ALPH: 1 alph}(amount)
     }
 }

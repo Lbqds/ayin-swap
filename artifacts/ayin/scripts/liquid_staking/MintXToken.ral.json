@@ -1,7 +1,7 @@
 {
   "version": "v2.3.3",
   "name": "MintXToken",
-  "bytecodeTemplate": "0101030001000e0c0d{0}01141700b41600{1}a3{1}0d0c{0}010f",
+  "bytecodeTemplate": "0101030001000e0c0d{0}01121700b41600{1}a3{1}0d0c{0}010d",
   "fieldsSig": {
     "names": [
       "liquidStaking",

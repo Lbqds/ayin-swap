@@ -123,7 +123,7 @@ export const PauseableTest = new Factory(
   Contract.fromJson(
     PauseableTestContractJson,
     "",
-    "60d12ba596d72a9549ac4beca935b53bb8a0e65c608ebe92fde5a51f78ec088d"
+    "accc04ce9a0639d9e75a35191f1850fcbab983ee7c5b6b364654c2fd0aff2bdf"
   )
 );
 

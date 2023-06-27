@@ -2,7 +2,7 @@ Contract StakingAccount(
     tokenId: ByteVec,
     rewardsTokenId: ByteVec,
     staker: Address,
-    factory: StakingAccountFactory,
+    parentContractAddress: Address,
     mut amountStaked: U256,
     mut rewardPerTokenPaid: U256,
     mut rewards: U256
@@ -38,9 +38,9 @@ Contract StakingAccount(
 
     @using(updateFields = true)
     pub fn setRewards(newRewards: U256, newRewardPerToken: U256) -> () {
-        let caller = callerContractId!()
+        let caller = callerAddress!()
 
-        checkCaller!(caller == contractId!(factory), ErrorCodes.UnauthorizedAccess)
+        checkCaller!(caller == parentContractAddress, ErrorCodes.UnauthorizedAccess)
 
         rewards = newRewards
         rewardPerTokenPaid = newRewardPerToken
@@ -48,9 +48,9 @@ Contract StakingAccount(
 
     @using(assetsInContract = true, preapprovedAssets = true, updateFields = true)
     pub fn stake(amount: U256) -> () { 
-        let caller = callerContractId!()
+        let caller = callerAddress!()
 
-        checkCaller!(caller == contractId!(factory), ErrorCodes.UnauthorizedAccess)
+        checkCaller!(caller == parentContractAddress, ErrorCodes.UnauthorizedAccess)
         transferTokenToSelf!(staker, tokenId, amount)
 
         amountStaked = amountStaked + amount
@@ -58,9 +58,9 @@ Contract StakingAccount(
 
     @using(assetsInContract = true, updateFields = true)
     pub fn unstake(amount: U256) -> () {
-        let caller = callerContractId!()
+        let caller = callerAddress!()
 
-        checkCaller!(caller == contractId!(factory), ErrorCodes.UnauthorizedAccess)
+        checkCaller!(caller == parentContractAddress, ErrorCodes.UnauthorizedAccess)
         assert!(amountStaked >= amount, ErrorCodes.InsufficientBalance)
 
         amountStaked = amountStaked - amount
@@ -74,12 +74,11 @@ Contract StakingAccount(
 
     @using(preapprovedAssets = true, updateFields = true)
     pub fn claimRewards() -> () {
-        let caller = callerContractId!()
+        let caller = callerAddress!()
 
-        checkCaller!(caller == contractId!(factory), ErrorCodes.UnauthorizedAccess)
+        checkCaller!(caller == parentContractAddress, ErrorCodes.UnauthorizedAccess)
 
         transferToken!(caller, staker, rewardsTokenId, rewards)
-
         rewards = 0
     }
 }

@@ -1,7 +1,7 @@
 {
   "version": "v2.3.3",
   "name": "DepositAyin",
-  "bytecodeTemplate": "0101030000000cb40c0d{0}0102{1}a3{1}0d0c{0}0107",
+  "bytecodeTemplate": "0101030000000cb40c0d{0}0102{1}a3{1}0d0c{0}0106",
   "fieldsSig": {
     "names": [
       "presale",

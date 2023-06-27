@@ -1,7 +1,7 @@
 {
   "version": "v2.3.3",
   "name": "BurnXToken",
-  "bytecodeTemplate": "0101030001000b{0}1700b41600{1}a3{1}0d0c{0}0110",
+  "bytecodeTemplate": "0101030001000b{0}1700b41600{1}a3{1}0d0c{0}010e",
   "fieldsSig": {
     "names": [
       "liquidStaking",

@@ -35,7 +35,6 @@ describe('Staking ', () => {
       address: staking.address,
       blockTimeStamp: 0,
       testArgs: {
-        staker: staker1,
         amount: oneAlph * 80n,
       },
       inputAssets: [
@@ -64,7 +63,6 @@ describe('Staking ', () => {
       address: st.address,
       blockTimeStamp: 0,
       testArgs: {
-        staker: staker2,
         amount: oneAlph * 20n,
       },
       inputAssets: [
@@ -139,7 +137,6 @@ describe('Staking ', () => {
       address: st.address,
       blockTimeStamp: 3000,
       testArgs: {
-        staker: staker3,
         amount: oneAlph * 100n,
       },
       inputAssets: [
@@ -210,7 +207,6 @@ describe('Staking ', () => {
       address: staking.address,
       blockTimeStamp: 0,
       testArgs: {
-        staker,
         amount: oneAlph,
       },
       inputAssets: [
@@ -247,9 +243,6 @@ describe('Staking ', () => {
       initialFields: st.fields,
       initialAsset: st.asset,
       address: st.address,
-      testArgs: {
-        staker,
-      },
       existingContracts: [...staking.dependencies, stAcc],
       blockTimeStamp: 1000,
       inputAssets: [{ address: staker, asset: { alphAmount: oneAlph * 2n } }],
@@ -275,7 +268,6 @@ describe('Staking ', () => {
       existingContracts: [stAcc],
       blockTimeStamp: 1000,
       testArgs: {
-        staker,
         amount: oneAlph,
       },
       inputAssets: [{ address: staker, asset: { alphAmount: oneAlph * 2n } }],

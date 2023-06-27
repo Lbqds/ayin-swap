@@ -35,7 +35,6 @@ export namespace AyinPresaleTypes {
     alphPerToken: bigint;
     saleOpen: boolean;
     tokensSold: bigint;
-    alphBalance: bigint;
     owner_: Address;
   };
 
@@ -45,10 +44,6 @@ export namespace AyinPresaleTypes {
     getAyinTokenId: {
       params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<HexString>;
-    };
-    getAlphBalance: {
-      params: Omit<CallContractParams<{}>, "args">;
-      result: CallContractResult<bigint>;
     };
     getTokensLeft: {
       params: Omit<CallContractParams<{}>, "args">;
@@ -108,14 +103,6 @@ class Factory extends ContractFactory<
       >
     ): Promise<TestContractResult<HexString>> => {
       return testMethod(this, "getAyinTokenId", params);
-    },
-    getAlphBalance: async (
-      params: Omit<
-        TestContractParams<AyinPresaleTypes.Fields, never>,
-        "testArgs"
-      >
-    ): Promise<TestContractResult<bigint>> => {
-      return testMethod(this, "getAlphBalance", params);
     },
     getTokensLeft: async (
       params: Omit<
@@ -209,7 +196,7 @@ export const AyinPresale = new Factory(
   Contract.fromJson(
     AyinPresaleContractJson,
     "",
-    "f9fbeac75d61b75672a18eb96897c34e836eadbfbb831bbe2b794532f270d22e"
+    "7108130dcee45837a948d0e6ef2bb9ae04ef54bc92afee5364ea8aab5287c977"
   )
 );
 
@@ -231,17 +218,6 @@ export class AyinPresaleInstance extends ContractInstance {
         AyinPresale,
         this,
         "getAyinTokenId",
-        params === undefined ? {} : params,
-        getContractByCodeHash
-      );
-    },
-    getAlphBalance: async (
-      params?: AyinPresaleTypes.CallMethodParams<"getAlphBalance">
-    ): Promise<AyinPresaleTypes.CallMethodResult<"getAlphBalance">> => {
-      return callMethod(
-        AyinPresale,
-        this,
-        "getAlphBalance",
         params === undefined ? {} : params,
         getContractByCodeHash
       );

@@ -180,23 +180,22 @@ class Factory extends ContractFactory<StakingInstance, StakingTypes.Fields> {
       return testMethod(this, "calculateRewardPerToken", params);
     },
     stake: async (
-      params: TestContractParams<
-        StakingTypes.Fields,
-        { staker: Address; amount: bigint }
-      >
+      params: TestContractParams<StakingTypes.Fields, { amount: bigint }>
     ): Promise<TestContractResult<null>> => {
       return testMethod(this, "stake", params);
     },
     unstake: async (
-      params: TestContractParams<
-        StakingTypes.Fields,
-        { staker: Address; amount: bigint }
-      >
+      params: TestContractParams<StakingTypes.Fields, { amount: bigint }>
     ): Promise<TestContractResult<null>> => {
       return testMethod(this, "unstake", params);
     },
+    sendRewards: async (
+      params: TestContractParams<StakingTypes.Fields, { account: HexString }>
+    ): Promise<TestContractResult<null>> => {
+      return testMethod(this, "sendRewards", params);
+    },
     claimRewards: async (
-      params: TestContractParams<StakingTypes.Fields, { staker: Address }>
+      params: Omit<TestContractParams<StakingTypes.Fields, never>, "testArgs">
     ): Promise<TestContractResult<null>> => {
       return testMethod(this, "claimRewards", params);
     },
@@ -221,7 +220,7 @@ export const Staking = new Factory(
   Contract.fromJson(
     StakingContractJson,
     "",
-    "b86498e3705e5a5c01ec9f98282abaf4227900c5d0ffd5aad440b4155d307386"
+    "1dcf33af1a73e1a38f05b168f5d6da7e10e69607142b331825afaba1f2502ecd"
   )
 );
 

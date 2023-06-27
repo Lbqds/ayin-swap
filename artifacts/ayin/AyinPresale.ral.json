@@ -1,8 +1,8 @@
 {
   "version": "v2.3.3",
   "name": "AyinPresale",
-  "bytecode": "07100c1e402b4034403d40494052405b406a4077408440cc40dd40f241084114010001010004b400011600ba00000101000ab4b2450c7b1600a005450c7b010001010004b400011600a105010000000102ce0002010000000102a00402010000000104a000a0032b02010000000102a00102010000000102a00202010101010006b40001b4ce001600ac010001010004b400011600a102010001010004b400011600a10101010102004025a0020c7b000516002b0c340d7b1600a0012c13c40de0b6b3a76400002d1701b41601a9a00416012aa104a00316002aa103a003a0002f4c0204a102b4ce001600ab00020404000616000001160316011602ab010002020009b4cd16001601000ca00416002ba104010002020009b4ce0016001601000ca00016002ba100010201010004b400011600b0",
-  "codeHash": "ff398bbc04c5bd2f8b967a9f24666fc22ea21da1b54a82ecb735b928eb954c4e",
+  "bytecode": "060f121f40284034403d404640554062406f40ad40be40cc40e240ee40fa00000101000ab4b2450c7b1600a004450c7b010001010004b400001600a104010000000102ce0002010000000104a000a0032b02010000000102a00102010000000102a00202010101010006b40000b4ce001600ac010001010004b400001600a102010001010004b400001600a10101010102001fa0020c7b00031600340d7b1600a0012c13c40de0b6b3a76400002d1701b41601a9a00316002aa103a003a0002f4c0204a102b4ce001600ab00020404000616000000160316011602ab010002020005b4cd16001601000a010002020009b4ce0016001601000aa00016002ba100010201010004b400001600b0010001010004b400001600ba",
+  "codeHash": "7108130dcee45837a948d0e6ef2bb9ae04ef54bc92afee5364ea8aab5287c977",
   "fieldsSig": {
     "names": [
       "ayinToken",
@@ -10,7 +10,6 @@
       "alphPerToken",
       "saleOpen",
       "tokensSold",
-      "alphBalance",
       "owner_"
     ],
     "types": [
@@ -18,7 +17,6 @@
       "U256",
       "U256",
       "Bool",
-      "U256",
       "U256",
       "Address"
     ],
@@ -28,28 +26,11 @@
       true,
       true,
       true,
-      true,
       true
     ]
   },
   "eventsSig": [],
   "functions": [
-    {
-      "name": "upgrade",
-      "usePreapprovedAssets": false,
-      "useAssetsInContract": false,
-      "isPublic": true,
-      "paramNames": [
-        "newBytecode"
-      ],
-      "paramTypes": [
-        "ByteVec"
-      ],
-      "paramIsMutable": [
-        false
-      ],
-      "returnTypes": []
-    },
     {
       "name": "onlyOwner",
       "usePreapprovedAssets": false,
@@ -92,18 +73,6 @@
       "paramIsMutable": [],
       "returnTypes": [
         "ByteVec"
-      ]
-    },
-    {
-      "name": "getAlphBalance",
-      "usePreapprovedAssets": false,
-      "useAssetsInContract": false,
-      "isPublic": true,
-      "paramNames": [],
-      "paramTypes": [],
-      "paramIsMutable": [],
-      "returnTypes": [
-        "U256"
       ]
     },
     {
@@ -279,6 +248,22 @@
       ],
       "paramTypes": [
         "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "upgrade",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": true,
+      "paramNames": [
+        "newBytecode"
+      ],
+      "paramTypes": [
+        "ByteVec"
       ],
       "paramIsMutable": [
         false

@@ -50,8 +50,10 @@ Contract Staking(
     }
 
     @using(preapprovedAssets = true, updateFields = true, checkExternalCaller = false)
-    pub fn stake(staker: Address, amount: U256) -> () {
+    pub fn stake(amount: U256) -> () {
         whenNotPaused()
+
+        let staker = callerAddress!()
 
         if (stakingAccountExists(staker)) {
             let stakingAccount = getStakingAccount(staker)
@@ -67,30 +69,38 @@ Contract Staking(
     }
 
     @using(updateFields = true, checkExternalCaller = false)
-    pub fn unstake(staker: Address, amount: U256) -> () {
+    pub fn unstake(amount: U256) -> () {
         whenNotPaused()
+
+        let staker = callerAddress!()
 
         let stakingAccount = getStakingAccount(staker)
 
         updateStakerReward(stakingAccount)
-        claimRewards(staker)
+        sendRewards(stakingAccount)
 
         stakingAccount.unstake(amount)
         totalAmountStaked = totalAmountStaked - amount
     }
 
-    @using(assetsInContract = true, checkExternalCaller = false)
-    pub fn claimRewards(staker: Address) -> () {
+    @using(assetsInContract = true)
+    fn sendRewards(account: StakingAccount) -> () {
+        let self = selfAddress!()
+        let stakingRewards = account.getRewards()
+
+        account.claimRewards{self -> rewardsTokenId: stakingRewards}()
+    }
+
+    @using(checkExternalCaller = false)
+    pub fn claimRewards() -> () {
         whenNotPaused()
+
+        let staker = callerAddress!()
 
         let stakingAccount = getStakingAccount(staker)
 
         updateStakerReward(stakingAccount)
-
-        let self = selfAddress!()
-        let stakingRewards = stakingAccount.getRewards()
-
-        stakingAccount.claimRewards{self -> rewardsTokenId: stakingRewards}()
+        sendRewards(stakingAccount)
     }
 
     @using(updateFields = true)
