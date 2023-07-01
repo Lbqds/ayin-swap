@@ -1,5 +1,16 @@
-import { AlephiumConnectButton } from '@alephium/web3-react';
-import { AppBar, Hidden, Link, makeStyles, Toolbar } from '@material-ui/core';
+import {
+  AlephiumConnectButton,
+  useAlephiumConnectContext,
+  useConnect,
+} from '@alephium/web3-react';
+import {
+  AppBar,
+  Hidden,
+  Link,
+  Button,
+  makeStyles,
+  Toolbar,
+} from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { COLORS } from '../muiTheme';
@@ -9,31 +20,92 @@ import { reset as resetMintState } from '../state/mint/actions';
 
 const useStyles = makeStyles((theme) => ({
   spacer: {
-    height: '1rem',
+    flexGrow: 1,
   },
   appBar: {
-    background: COLORS.nearBlackWithMinorTransparency,
+    background: 'rgba(0,0,0,0)',
     '& > .MuiToolbar-root': {
-      margin: '.5rem 0rem 0rem 1rem',
       width: '100%',
     },
   },
+  logoContainer: {
+    flexGrow: 1,
+  },
+  walletButton: {
+    width: '175px',
+    height: '50px',
+    borderRadius: '8px',
+    backgroundColor: COLORS.secondary,
+  },
+  linksContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  buttonsContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   link: {
-    ...theme.typography.body1,
-    color: theme.palette.text.primary,
+    position: 'relative',
+    color: '#fff',
+    fontSize: '18px',
     marginLeft: theme.spacing(6),
-    fontWeight: 800,
+    lineHeight: '18px',
+    fontWeight: 600,
     [theme.breakpoints.down('sm')]: {
       marginLeft: theme.spacing(2.5),
     },
     [theme.breakpoints.down('xs')]: {
       marginLeft: theme.spacing(1),
     },
-    '&.active': {
-      color: theme.palette.primary.light,
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      bottom: '-10px',
+      left: '50%',
+      width: '0%',
+      height: '3px',
+      background: 'linear-gradient(to right, #7E8FA9, #A988A2)',
+      borderRadius: '3px',
+      transition: 'width 0.2s',
+      transform: 'translateX(-50%)',
+    },
+    '&.active,&:hover': {
+      textDecoration: 'none',
+      '&::after': {
+        width: '70%',
+      },
     },
   },
 }));
+
+const WalletButton = () => {
+  const context = useAlephiumConnectContext();
+  const { connect, disconnect } = useConnect({
+    addressGroup: context.addressGroup,
+    keyType: context.keyType,
+    networkId: context.network,
+  });
+
+  const classes = useStyles();
+
+  return (
+    <AlephiumConnectButton.Custom displayAccount={(account) => account.address}>
+      {({ isConnected, truncatedAddress }) => {
+        return isConnected ? (
+          <Button className={classes.walletButton} onClick={disconnect}>
+            {truncatedAddress}
+          </Button>
+        ) : (
+          <Button className={classes.walletButton} onClick={connect}>
+            Connect
+          </Button>
+        );
+      }}
+    </AlephiumConnectButton.Custom>
+  );
+};
 
 function Header() {
   const classes = useStyles();
@@ -46,10 +118,14 @@ function Header() {
       className={classes.appBar}
       elevation={0}
     >
-      <Toolbar>
-        <div className={classes.spacer} />
+      <Toolbar style={{ margin: 0 }}>
+        <div className={classes.logoContainer}>
+          <Link to="/" color="inherit" component={NavLink}>
+            <img src="/ayinlogo-transparent.png" width={64} />
+          </Link>
+        </div>
         <Hidden implementation="css" xsDown>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div className={classes.linksContainer}>
             <Link
               component={NavLink}
               to="/presale"
@@ -144,11 +220,10 @@ function Header() {
             {/* </Link> */}
           </div>
         </Hidden>
-        <div style={{ position: 'absolute', top: '6px', right: '30px' }}>
+        <div className={classes.spacer} />
+        <div className={classes.buttonsContainer}>
+          <WalletButton />
           <TransactionSettings />
-        </div>
-        <div style={{ position: 'absolute', top: '10px', right: '80px' }}>
-          <AlephiumConnectButton label="Connect Wallet" />
         </div>
       </Toolbar>
     </AppBar>
