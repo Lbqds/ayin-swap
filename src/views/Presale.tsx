@@ -74,7 +74,8 @@ function Presale() {
   const onAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
     if (text === '') {
-      setBuyAmount('0.0');
+      setBuyAmount(text);
+      return;
     }
 
     try {
@@ -86,23 +87,32 @@ function Presale() {
     }
   };
 
+  if (presaleState === undefined) {
+    return <div>Wallet not connected</div>;
+  }
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.container}>
         <div>
           <h1>Some presale header</h1>
-          {presaleState !== undefined && (
+          {
             <h3>
               1 $AYIN = {bigIntToString(presaleState.alphPerToken, 18)} ALPH
             </h3>
-          )}
+          }
           <p>Some presale texh blah blah</p>
         </div>
         <div className={classes.buyContainer}>
           <Tooltip title={`Ayin left: ${ayinLeft}`}>
             <LinearProgress
               variant="determinate"
-              value={80}
+              value={
+                100 -
+                Number(
+                  (presaleState.tokensSold * 100n) / presaleState.tokensForSale
+                )
+              }
               color="secondary"
               className={classes.progress}
             />
@@ -122,13 +132,18 @@ function Presale() {
               ),
             }}
             onChange={onAmountChange}
+            onBlur={() => {
+              if (buyAmount === '') {
+                setBuyAmount('0.0');
+              }
+            }}
             fullWidth
           />
           <Button
             className={classes.buyButton}
             onClick={() => buyAyin(buyAmount)}
           >
-            {calculatePriceInAlph(buyAmount) <= 1n
+            {buyAmount === '' || calculatePriceInAlph(buyAmount) <= 1n
               ? 'BUY'
               : bigIntToString(calculatePriceInAlph(buyAmount), 18) + ' ALPH'}
           </Button>

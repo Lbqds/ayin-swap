@@ -5,11 +5,12 @@ export const commonStyles = makeStyles((theme) => ({
   numberField: {
     flexGrow: 1,
     '& > * > .MuiInputBase-input': {
-      textAlign: 'right',
-      height: '100%',
-      flexGrow: '1',
-      fontSize: '1.5rem',
       fontFamily: 'Montserrat',
+      fontSize: '25px',
+      fontWeight: 500,
+      lineHeight: '25px',
+      textAlign: 'right',
+      flexGrow: '1',
       caretShape: 'block',
       width: '0',
       '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
@@ -26,7 +27,6 @@ export const commonStyles = makeStyles((theme) => ({
   tokenContainerWithBalance: {
     minHeight: '44px',
     padding: '.2rem .8rem',
-    border: '2px solid #333333',
     // borderRadius: '10px',
     width: 'initial',
     height: '80px',
