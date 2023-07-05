@@ -21,7 +21,7 @@ const configuration: Configuration<Settings> = {
         process.env.PRIVATE_KEYS === undefined
           ? []
           : process.env.PRIVATE_KEYS.split(','),
-      settings: { feeSetter: '19ymyoDKsqgYtEZoJva1BQr14oeYzaCHve9nnQXSuqLiH' },
+      settings: { feeSetter: '13hcWq31LoVHnBJt2HK6tnzR5Zhat54ZGBHzvSFeFfRE2' },
     },
 
     mainnet: {
