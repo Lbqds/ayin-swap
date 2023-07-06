@@ -16,7 +16,7 @@ export default function NumberTextField({ ...props }: TextFieldProps) {
     <TextField
       type="text"
       {...props}
-      variant="filled"
+      variant="outlined"
       InputProps={{ ...(props?.InputProps || {}) }}
       onChange={onChange}
     />

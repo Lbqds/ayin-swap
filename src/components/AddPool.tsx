@@ -1,60 +1,75 @@
-import { Container, Paper, Typography } from "@material-ui/core";
-import Collapse from "@material-ui/core/Collapse";
-import { TokenInfo } from "@alephium/token-list"
-import { useCallback, useEffect, useMemo, useState } from "react";
-import ButtonWithLoader from "./ButtonWithLoader";
-import { tokenPairExist, createTokenPair } from "../utils/dex";
-import { useAlephiumWallet, useAvailableBalances } from "../hooks/useAlephiumWallet";
-import { commonStyles } from "./style";
-import TokenSelectDialog from "./TokenSelectDialog";
-import { useHistory } from "react-router-dom";
-import { TransactionSubmitted, WaitingForTxSubmission } from "./Transactions";
+import { Container, Paper, Typography } from '@material-ui/core';
+import Collapse from '@material-ui/core/Collapse';
+import { TokenInfo } from '@alephium/token-list';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import ButtonWithLoader from './ButtonWithLoader';
+import { tokenPairExist, createTokenPair } from '../utils/dex';
+import {
+  useAlephiumWallet,
+  useAvailableBalances,
+} from '../hooks/useAlephiumWallet';
+import { commonStyles } from './style';
+import TokenSelectDialog from './TokenSelectDialog';
+import { useHistory } from 'react-router-dom';
+import { TransactionSubmitted, WaitingForTxSubmission } from './Transactions';
 
 function AddPool() {
   const commonClasses = commonStyles();
-  const [tokenAInfo, setTokenAInfo] = useState<TokenInfo | undefined>(undefined)
-  const [tokenBInfo, setTokenBInfo] = useState<TokenInfo | undefined>(undefined)
-  const [txId, setTxId] = useState<string | undefined>(undefined)
-  const [addingPool, setAddingPool] = useState<boolean>(false)
-  const [error, setError] = useState<string | undefined>(undefined)
-  const wallet = useAlephiumWallet()
-  const balance = useAvailableBalances()
-  const history = useHistory()
+  const [tokenAInfo, setTokenAInfo] = useState<TokenInfo | undefined>(
+    undefined
+  );
+  const [tokenBInfo, setTokenBInfo] = useState<TokenInfo | undefined>(
+    undefined
+  );
+  const [txId, setTxId] = useState<string | undefined>(undefined);
+  const [addingPool, setAddingPool] = useState<boolean>(false);
+  const [error, setError] = useState<string | undefined>(undefined);
+  const wallet = useAlephiumWallet();
+  const balance = useAvailableBalances();
+  const history = useHistory();
 
   useEffect(() => {
     async function checkContractExist() {
-      if (tokenAInfo !== undefined && tokenBInfo !== undefined && wallet !== undefined) {
+      if (
+        tokenAInfo !== undefined &&
+        tokenBInfo !== undefined &&
+        wallet !== undefined
+      ) {
         try {
-          const exist = await tokenPairExist(wallet.nodeProvider, tokenAInfo.id, tokenBInfo.id)
-          if (exist) setError(`token pair already exist`)
+          const exist = await tokenPairExist(
+            wallet.nodeProvider,
+            tokenAInfo.id,
+            tokenBInfo.id
+          );
+          if (exist) setError(`token pair already exist`);
         } catch (err) {
-          setError(`${err}`)
+          setError(`${err}`);
         }
       }
     }
 
-    setError(undefined)
-    checkContractExist()
-  }, [tokenAInfo, tokenBInfo, wallet])
+    setError(undefined);
+    checkContractExist();
+  }, [tokenAInfo, tokenBInfo, wallet]);
 
   const handleTokenAChange = useCallback((tokenInfo) => {
-    setTokenAInfo(tokenInfo)
-  }, [])
+    setTokenAInfo(tokenInfo);
+  }, []);
 
   const handleTokenBChange = useCallback((tokenInfo) => {
-    setTokenBInfo(tokenInfo)
-  }, [])
+    setTokenBInfo(tokenInfo);
+  }, []);
 
-  const completed = useMemo(() => txId !== undefined, [txId])
+  const completed = useMemo(() => txId !== undefined, [txId]);
 
   const redirectToAddLiquidity = useCallback(() => {
-    setTokenAInfo(undefined)
-    setTokenBInfo(undefined)
-    setTxId(undefined)
-    setAddingPool(false)
-    setError(undefined)
-    history.push('/add-liquidity')
-  }, [history])
+    setTokenAInfo(undefined);
+    setTokenBInfo(undefined);
+    setTxId(undefined);
+    setAddingPool(false);
+    setError(undefined);
+    history.push('/add-liquidity');
+  }, [history]);
 
   const tokenPairContent = (
     <div className={commonClasses.tokenPairContainer}>
@@ -73,42 +88,51 @@ function AddPool() {
         mediumSize={true}
       />
     </div>
-  )
+  );
 
   const handleAddPool = useCallback(async () => {
     try {
-      setAddingPool(true)
-      if (wallet !== undefined && wallet.signer.explorerProvider !== undefined && tokenAInfo !== undefined && tokenBInfo !== undefined) {
+      setAddingPool(true);
+      if (
+        wallet !== undefined &&
+        wallet.signer.explorerProvider !== undefined &&
+        tokenAInfo !== undefined &&
+        tokenBInfo !== undefined
+      ) {
         const result = await createTokenPair(
           wallet.signer,
           wallet.signer.explorerProvider,
           wallet.address,
           tokenAInfo.id,
           tokenBInfo.id
-        )
-        console.log(`add pool succeed, tx id: ${result.txId}, token pair id: ${result.tokenPairId}`)
-        setTxId(result.txId)
-        setAddingPool(false)
+        );
+        console.log(
+          `add pool succeed, tx id: ${result.txId}, token pair id: ${result.tokenPairId}`
+        );
+        setTxId(result.txId);
+        setAddingPool(false);
       }
     } catch (error) {
-      setError(`${error}`)
-      setAddingPool(false)
-      console.error(`failed to add pool, error: ${error}`)
+      setError(`${error}`);
+      setAddingPool(false);
+      console.error(`failed to add pool, error: ${error}`);
     }
-  }, [wallet, tokenAInfo, tokenBInfo])
+  }, [wallet, tokenAInfo, tokenBInfo]);
 
   const readyToAddPool =
     wallet !== undefined &&
     tokenAInfo !== undefined &&
     tokenBInfo !== undefined &&
-    !addingPool && !completed && 
-    error === undefined
+    !addingPool &&
+    !completed &&
+    error === undefined;
   const addPoolButton = (
     <ButtonWithLoader
       disabled={!readyToAddPool}
       onClick={handleAddPool}
       className={
-        commonClasses.gradientButton + (!readyToAddPool ? " " + commonClasses.disabled : "")
+        commonClasses.gradientButton +
+        (!readyToAddPool ? ' ' + commonClasses.disabled : '')
       }
     >
       Add Pool
@@ -133,13 +157,17 @@ function AddPool() {
           buttonText="Add Liquidity"
           onClick={redirectToAddLiquidity}
         />
-        {wallet === undefined ?
+        {wallet === undefined ? (
           <div>
-            <Typography variant="h6" color="error" className={commonClasses.error}>
+            <Typography
+              variant="h6"
+              color="error"
+              className={commonClasses.error}
+            >
               Your wallet is not connected
             </Typography>
-          </div> : null
-        }
+          </div>
+        ) : null}
         <div>
           <Collapse in={!addingPool && !completed && wallet !== undefined}>
             {
@@ -147,7 +175,11 @@ function AddPool() {
                 {tokenPairContent}
                 <div className={commonClasses.spacer} />
                 {error ? (
-                  <Typography variant="body2" color="error" className={commonClasses.error}>
+                  <Typography
+                    variant="body2"
+                    color="error"
+                    className={commonClasses.error}
+                  >
                     {error}
                   </Typography>
                 ) : null}

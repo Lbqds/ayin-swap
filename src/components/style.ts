@@ -8,6 +8,7 @@ export const commonStyles = makeStyles((theme) => ({
       fontFamily: 'Montserrat',
       fontSize: '25px',
       fontWeight: 500,
+      minHeight: '44px',
       lineHeight: '25px',
       textAlign: 'right',
       flexGrow: '1',
@@ -27,7 +28,7 @@ export const commonStyles = makeStyles((theme) => ({
   tokenContainerWithBalance: {
     minHeight: '44px',
     padding: '.2rem .8rem',
-    // borderRadius: '10px',
+    borderRadius: '10px',
     width: 'initial',
     height: '80px',
   },
