@@ -53,8 +53,7 @@ const useStyles = makeStyles((_theme) => ({
     },
   },
   inputIcon: {
-    width: '32px',
-    height: '32px',
+    width: '12px',
   },
   buyButton: {
     backgroundColor: COLORS.secondary,
@@ -124,10 +123,7 @@ function Presale() {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <img
-                    className={classes.inputIcon}
-                    src="/ayinlogo-transparent.png"
-                  />
+                  <img className={classes.inputIcon} src="/ayin-logo.png" />
                 </InputAdornment>
               ),
             }}

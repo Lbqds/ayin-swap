@@ -132,7 +132,7 @@ function Header() {
       <Toolbar style={{ margin: 0 }}>
         <div className={classes.logoContainer}>
           <Link to="/" color="inherit" component={NavLink}>
-            <img src="/ayinlogo-transparent.png" width={64} />
+            <img src="/ayin-logo.png" width={18} />
           </Link>
         </div>
         <div className={classes.linksContainer}>

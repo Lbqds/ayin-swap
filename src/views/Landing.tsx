@@ -44,7 +44,7 @@ function Landing() {
         </p>
       </div>
       <div>
-        <img src="/ayinlogo-transparent.png" height={312} />
+        <img src="/ayin-logo.png" height={312} />
       </div>
     </div>
   );
