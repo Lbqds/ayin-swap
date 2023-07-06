@@ -37,7 +37,7 @@ export function useXAyin() {
       setXAyinBalance(bigIntToString(xAyinBalance, 18));
     }
 
-    xAyin.subscribePriceChangedEvent({
+    const subscription = xAyin.subscribePriceChangedEvent({
       pollingInterval: 1000,
       messageCallback: (event) => {
         const newPrice = event.fields.newPrice;
@@ -51,6 +51,7 @@ export function useXAyin() {
       },
       errorCallback: () => Promise.resolve(),
     });
+    return () => subscription.unsubscribe();
   }, [balance, xAyinState]);
 
   const fetchXAyinState = async () => {

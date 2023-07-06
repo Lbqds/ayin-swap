@@ -10,26 +10,32 @@ import {
   Button,
   makeStyles,
   Toolbar,
+  Popover,
+  Menu,
+  MenuItem,
 } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { COLORS } from '../muiTheme';
+import { commonStyles } from '../components/style';
 import TransactionSettings from './Settings';
 import { reset as resetSwapState } from '../state/swap/actions';
 import { reset as resetMintState } from '../state/mint/actions';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
-  spacer: {
-    flexGrow: 1,
-  },
   appBar: {
     background: 'rgba(0,0,0,0)',
     '& > .MuiToolbar-root': {
       width: '100%',
+      justifyContent: 'space-around',
     },
   },
+  paper: {
+    backgroundColor: '#12234F',
+  },
   logoContainer: {
-    flexGrow: 1,
+    // flexGrow: 1,
   },
   walletButton: {
     width: '175px',
@@ -39,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
   },
   linksContainer: {
     display: 'flex',
+    flexGrow: 1,
+    margin: '0 96px',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -50,15 +58,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     color: '#fff',
     fontSize: '18px',
-    marginLeft: theme.spacing(6),
     lineHeight: '18px',
     fontWeight: 600,
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: theme.spacing(2.5),
-    },
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: theme.spacing(1),
-    },
+    textDecoration: 'none',
+    margin: 0,
     '&::after': {
       content: '""',
       position: 'absolute',
@@ -89,6 +92,7 @@ const WalletButton = () => {
   });
 
   const classes = useStyles();
+  const commonClasses = commonStyles();
 
   return (
     <AlephiumConnectButton.Custom displayAccount={(account) => account.address}>
@@ -108,6 +112,13 @@ const WalletButton = () => {
 };
 
 function Header() {
+  const [liquidityAnchorEl, setLiquidityAnchorEl] =
+    useState<null | HTMLElement>(null);
+  const liquidityMenuOpen = Boolean(liquidityAnchorEl);
+
+  const [poolAnchorEl, setPoolAnchorEl] = useState<null | HTMLElement>(null);
+  const poolMenuOpen = Boolean(poolAnchorEl);
+
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -124,103 +135,137 @@ function Header() {
             <img src="/ayinlogo-transparent.png" width={64} />
           </Link>
         </div>
-        <Hidden implementation="css" xsDown>
-          <div className={classes.linksContainer}>
-            <Link
-              component={NavLink}
-              to="/presale"
-              color="inherit"
-              className={classes.link}
+        <div className={classes.linksContainer}>
+          <Link
+            component={NavLink}
+            to="/presale"
+            color="inherit"
+            className={classes.link}
+          >
+            Presale
+          </Link>
+          <Link
+            component={NavLink}
+            to="/swap"
+            color="inherit"
+            className={classes.link}
+            onClick={() => {
+              dispatch(resetSwapState());
+            }}
+          >
+            Trade
+          </Link>
+          <Link
+            component={NavLink}
+            to="/stake"
+            color="inherit"
+            className={classes.link}
+          >
+            Stake LP
+          </Link>
+          <Link
+            component={NavLink}
+            to="/xayin"
+            color="inherit"
+            className={classes.link}
+          >
+            XAYIN
+          </Link>
+          <h3
+            onClick={(e) => setLiquidityAnchorEl(e.currentTarget)}
+            className={classes.link}
+            style={{ cursor: 'pointer' }}
+          >
+            Liquidity
+          </h3>
+          <Menu
+            anchorEl={liquidityAnchorEl}
+            open={liquidityMenuOpen}
+            PopoverClasses={{ paper: classes.paper }}
+            onClose={() => setLiquidityAnchorEl(null)}
+          >
+            <MenuItem
+              onClick={() => setLiquidityAnchorEl(null)}
+              style={{ width: '100%' }}
             >
-              Presale
-            </Link>
-            <Link
-              component={NavLink}
-              to="/swap"
-              color="inherit"
-              className={classes.link}
-              onClick={() => {
-                dispatch(resetSwapState());
-              }}
-            >
-              Trade
-            </Link>
-            <Link
-              component={NavLink}
-              to="/stake"
-              color="inherit"
-              className={classes.link}
-            >
-              Stake LP
-            </Link>
-            <Link
-              component={NavLink}
-              to="/xayin"
-              color="inherit"
-              className={classes.link}
-            >
-              XAYIN
-            </Link>
-            <Link
-              component={NavLink}
-              to="/add-liquidity"
-              color="inherit"
-              className={classes.link}
-              onClick={() => {
-                dispatch(resetMintState());
-              }}
-            >
-              Pool
-            </Link>
-            <Link
-              component={NavLink}
-              to="/add-liquidity"
-              color="inherit"
-              className={classes.link}
-              onClick={() => {
-                dispatch(resetMintState());
-              }}
-            >
-              Docs
-            </Link>
-            <Link
-              component={NavLink}
-              to="/add-liquidity"
-              color="inherit"
-              className={classes.link}
-              onClick={() => {
-                dispatch(resetMintState());
-              }}
-            >
-              Discord
-            </Link>
-            {/* <Link */}
-            {/*   component={NavLink} */}
-            {/*   to="/remove-liquidity" */}
-            {/*   color="inherit" */}
-            {/*   className={classes.link} */}
-            {/* > */}
-            {/*   Remove Liquidity */}
-            {/* </Link> */}
-            {/* <Link */}
-            {/*   component={NavLink} */}
-            {/*   to="/add-pool" */}
-            {/*   color="inherit" */}
-            {/*   className={classes.link} */}
-            {/* > */}
-            {/*   Add Pool */}
-            {/* </Link> */}
-            {/* <Link */}
-            {/*   component={NavLink} */}
-            {/*   to="/pool" */}
-            {/*   color="inherit" */}
-            {/*   className={classes.link} */}
-            {/* > */}
-            {/*   Pool */}
-            {/* </Link> */}
-          </div>
-        </Hidden>
-        <div className={classes.spacer} />
+              <Link
+                component={NavLink}
+                to="/add-liquidity"
+                color="inherit"
+                className={classes.link}
+                onClick={() => {
+                  dispatch(resetMintState());
+                }}
+              >
+                Add liquidity
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={() => setLiquidityAnchorEl(null)}>
+              <Link
+                component={NavLink}
+                to="/remove-liquidity"
+                color="inherit"
+                className={classes.link}
+              >
+                Remove Liquidity
+              </Link>
+            </MenuItem>
+          </Menu>
+          <h3
+            onClick={(e) => setPoolAnchorEl(e.currentTarget)}
+            className={classes.link}
+            style={{ cursor: 'pointer' }}
+          >
+            Pools
+          </h3>
+          <Menu
+            anchorEl={poolAnchorEl}
+            open={poolMenuOpen}
+            PopoverClasses={{ paper: classes.paper }}
+            onClose={() => setPoolAnchorEl(null)}
+          >
+            <MenuItem onClick={() => setPoolAnchorEl(null)}>
+              <Link
+                component={NavLink}
+                to="/pool"
+                color="inherit"
+                className={classes.link}
+                style={{ padding: 0 }}
+              >
+                Pool
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={() => setPoolAnchorEl(null)}>
+              <Link
+                component={NavLink}
+                to="/add-pool"
+                color="inherit"
+                className={classes.link}
+              >
+                Add Pool
+              </Link>
+            </MenuItem>
+          </Menu>
+          <Link
+            component={NavLink}
+            to="/docs"
+            color="inherit"
+            className={classes.link}
+            onClick={() => {
+              dispatch(resetMintState());
+            }}
+          >
+            Docs
+          </Link>
+          <a
+            href="https://discord.com/channels/1072030870938075247/1072033147144908810"
+            color="inherit"
+            target="_blank"
+            className={classes.link}
+          >
+            Discord
+          </a>
+        </div>
         <div className={classes.buttonsContainer}>
           <WalletButton />
           <TransactionSettings />
