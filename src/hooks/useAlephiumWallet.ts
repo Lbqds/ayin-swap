@@ -40,7 +40,6 @@ export function useAlephiumWallet() {
     if (context.signerProvider?.nodeProvider === undefined) {
       return undefined;
     }
-    console.log('1111', context.signerProvider.nodeProvider);
     web3.setCurrentNodeProvider(context.signerProvider.nodeProvider);
     if (isConnected && account !== undefined) {
       return new AlephiumWallet(

@@ -1,4 +1,11 @@
-import { DUST_AMOUNT, ONE_ALPH } from '@alephium/web3';
+import {
+  addressFromContractId,
+  binToHex,
+  DUST_AMOUNT,
+  encodeAddress,
+  ONE_ALPH,
+  stringToHex,
+} from '@alephium/web3';
 import { parseUnits } from 'ethers/lib/utils';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -64,7 +71,7 @@ export function useStaking() {
       },
     });
 
-    const stakingAcc = StakingAccount.at(result.returns);
+    const stakingAcc = StakingAccount.at(addressFromContractId(result.returns));
 
     return stakingAcc;
   };
