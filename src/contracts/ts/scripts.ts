@@ -11,6 +11,8 @@ import {
   SignerProvider,
   HexString,
 } from "@alephium/web3";
+import { default as BurnAyinScriptJson } from "../ayin/scripts/ayin/BurnAyin.ral.json";
+import { default as ChangeAyinOwnerScriptJson } from "../ayin/scripts/ayin/ChangeAyinOwner.ral.json";
 import { default as MintAyinScriptJson } from "../ayin/scripts/ayin/MintAyin.ral.json";
 import { default as BurnXTokenScriptJson } from "../ayin/scripts/liquid_staking/BurnXToken.ral.json";
 import { default as MintXTokenScriptJson } from "../ayin/scripts/liquid_staking/MintXToken.ral.json";
@@ -32,6 +34,14 @@ import { default as SwapMaxInScriptJson } from "../scripts/SwapMaxIn.ral.json";
 import { default as SwapMinOutScriptJson } from "../scripts/SwapMinOut.ral.json";
 import { default as GetTokenScriptJson } from "../test/GetToken.ral.json";
 
+export const BurnAyin = new ExecutableScript<{
+  ayin: HexString;
+  amount: bigint;
+}>(Script.fromJson(BurnAyinScriptJson));
+export const ChangeAyinOwner = new ExecutableScript<{
+  ayin: HexString;
+  newOwner: Address;
+}>(Script.fromJson(ChangeAyinOwnerScriptJson));
 export const MintAyin = new ExecutableScript<{
   ayin: HexString;
   to: Address;

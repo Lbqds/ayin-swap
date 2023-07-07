@@ -1,0 +1,4 @@
+@using(preapprovedAssets = false)
+TxScript ChangeAyinOwner(ayin: AyinToken, newOwner: Address) {
+  ayin.changeOwner(newOwner)
+}

@@ -1,0 +1,3 @@
+TxScript BurnAyin(ayin: AyinToken, amount: U256) {
+  ayin.burn{callerAddress!() -> tokenId!(ayin) : amount}(amount)
+}

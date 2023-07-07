@@ -1,7 +1,7 @@
 {
   "version": "v2.3.3",
   "name": "MintAyin",
-  "bytecodeTemplate": "01010300000006{1}{2}0e0c{0}0106",
+  "bytecodeTemplate": "0101030000000ab4{1}13c3038d7ea4c68000a7{1}{2}0e0c{0}0106",
   "fieldsSig": {
     "names": [
       "ayin",

@@ -1,20 +1,17 @@
 {
   "version": "v2.3.3",
-  "name": "MintAyin",
-  "bytecodeTemplate": "0101030000000ab4{1}13c3038d7ea4c68000a7{1}{2}0e0c{0}0106",
+  "name": "ChangeAyinOwner",
+  "bytecodeTemplate": "01010000000005{1}0d0c{0}0105",
   "fieldsSig": {
     "names": [
       "ayin",
-      "to",
-      "amount"
+      "newOwner"
     ],
     "types": [
       "ByteVec",
-      "Address",
-      "U256"
+      "Address"
     ],
     "isMutable": [
-      false,
       false,
       false
     ]
@@ -22,7 +19,7 @@
   "functions": [
     {
       "name": "main",
-      "usePreapprovedAssets": true,
+      "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,
       "paramNames": [],
